@@ -1,11 +1,10 @@
 {
-  "name": "compass-mixins",
-  "version": "0.12.3",
+  "name": "libsass-mixins",
+  "version": "1.0.0",
   "authors": [
-    "Guillaume Balaine <igosuki@gmail.com>",
-    "Michael Heillein <nichaek>"
+    "Mark Johnson"
   ],
-  "description": "Compass stylesheets",
+  "description": "Supplemental mixins for libsass",
   "main": "lib/_compass.scss",
   "keywords": [
     "compass",

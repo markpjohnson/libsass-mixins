@@ -1,19 +1,15 @@
 {
-  "name": "compass-mixins",
-  "version": "0.12.3",
+  "name": "libsass-mixins",
+  "version": "1.0.0",
   "author": {
-    "name": "Guillaume Balaine",
-    "email": "igosuki@gmail.com",
-    "url": "https://github.com/Igosuki"
+    "name": "Mark Johnson",
+    "email": "mjohnson60@gmail.com",
+    "url": "https://github.com/markpjohnson"
   },
-  "contributors": [{
-    "name": "Michael Heillein",
-    "url": "https://github.com/michaek"
-  }],
-  "description": "Compass stylesheets",
+  "description": "Libsass Mixins",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Igosuki/compass-mixins.git"
+    "url": "git://github.com/markpjohnson/libsass-mixins.git"
   },
   "main": "lib/_compass.scss",
   "keywords": [
