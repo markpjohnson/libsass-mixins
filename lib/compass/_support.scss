@@ -22,18 +22,18 @@ $debug-browser-support: false !default;
 // The values of this map are the min version that is valid for that browser
 // according to `browser-versions($browser)`
 $browser-minimum-versions: (
-  'chrome':  null,
-  'firefox': null,
-  'ie':      null,
-  'safari':  null,
-  'opera':   null
+  'chrome'  null,
+  'firefox' null,
+  'ie'      null,
+  'safari'  null,
+  'opera'   null
 ) !default;
 
 
 // @private
 $default-capability-options: (
-  (full-support: true),
-  (partial-support: true)
+  (full-support true),
+  (partial-support true)
 );
 
 // When a prefix in in context, but there is no current prefix
@@ -111,7 +111,7 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // Version can be a single version string or a list of versions ordered from oldest to newest.
 @mixin for-legacy-browser($browser, $min-version, $max-version: $min-version,
                           $threshold: $critical-usage-threshold,
-                          $ranges: ($browser: $min-version $max-version)) {
+                          $ranges: ($browser $min-version $max-version)) {
   @if not browser-out-of-scope($browser, $max-version) and
       support-legacy-browser($browser, $min-version, $max-version, $threshold)
   {
@@ -147,11 +147,23 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // $browsers is a map of browser name to version ranges
 @mixin for-legacy-browsers($browsers, $threshold: $critical-usage-threshold) {
   $rendered: false;
-  @each $browser, $range in $browsers {
+  @each $browser in map-keys($browsers) {
+    $range: map-get($browsers, $browser);
     @if not $rendered {
-      @include for-legacy-browser($browser, $range..., $threshold: $threshold, $ranges: $browsers) {
-        $rendered: true;
-        @content;
+      $min-version: nth($range, 1);
+      $max-version: 0;
+      @if length($range) > 1 {
+        $max-version: nth($range, 2);
+        
+        @include for-legacy-browser($browser, nth($range, 1), nth($range, 2), $threshold: $threshold, $ranges: $browsers) {
+          $rendered: true;
+          @content;
+        }
+      } @else {
+        @include for-legacy-browser($browser, $min-version, $threshold: $threshold, $ranges: $browsers) {
+          $rendered: true;
+          @content;
+        }
       }
     }
   }
@@ -205,7 +217,7 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
   $result: ();
   @each $prefix in browser-prefixes($supported-browsers) {
     $result: map-merge($result,
-                      ($prefix: use-prefix($prefix, $capability, $threshold, $capability-options)));
+                      ($prefix use-prefix($prefix, $capability, $threshold, $capability-options)));
   }
   @return $result;
 }
@@ -215,7 +227,9 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // Also yields to the content once with $current-prefix set to null for the official version
 // as long as there's not already a prefix in scope.
 @mixin with-each-prefix($capability, $threshold, $capability-options: $default-capability-options) {
-  @each $prefix, $should-use-prefix in prefixes-for-capability($capability, $threshold, $capability-options) {
+  $prefixes: prefixes-for-capability($capability, $threshold, $capability-options);
+  @each $prefix in map-keys($prefixes) {
+    $should-use-prefix: map-get($prefixes, $prefix);
     @if $should-use-prefix {
       @if $debug-browser-support and type-of($should-use-prefix) == list {
         /* Capability #{$capability} is prefixed with #{$prefix} because #{$should-use-prefix} is required. */
@@ -243,7 +257,8 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // $ranges.
 @function has-browser-subset($ranges, $subset-ranges) {
   $found-mismatch: false;
-  @each $browser, $subset-range in $subset-ranges {
+  @each $browser in map-keys($subset-ranges) {
+    $subset-range: map-get($subset-ranges, $browser);
     $range: map-get($ranges, $browser);
     @if $range {
       $min-1: nth($subset-range, 1);
@@ -271,7 +286,8 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // to the maximum of the two minimum versions, and the maximum will be
 // set to the minmum of the two maximum versions.
 @function intersect-browser-ranges($ranges, $new-ranges) {
-  @each $browser, $new-range in $new-ranges {
+  @each $browser in map-keys($new-ranges) {
+    $new-range: map-get($new-ranges, $browser);
     $old-range: map-get($ranges, $browser);
     @if $old-range {
       $old-min: nth($old-range, 1);
@@ -282,9 +298,9 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
                    $old-min, $new-min);
       $minimax: if(compare-browser-versions($browser, $old-max, $new-max) < 0,
                    $old-max, $new-max);
-      $ranges: map-merge($ranges, ($browser: $maximin $minimax));
+      $ranges: map-merge($ranges, ($browser $maximin $minimax));
     } @else {
-      $ranges: map-merge($ranges, ($browser: $new-range));
+      $ranges: map-merge($ranges, ($browser $new-range));
     }
   }
   @return $ranges;
@@ -320,21 +336,16 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 // Returns true if the prefixed usage stats for the capability exceed the threshold
 // or if the minimum version for a supported browser would require a prefix for the capability.
 @function use-prefix($prefix, $capability, $threshold, $capability-options: $default-capability-options) {
-  $usage: prefix-usage($prefix, $capability, $capability-options);
+  $usage: 0;
+  @if $prefix == -moz    { $usage: 11.75; }
+  @if $prefix == -webkit { $usage: 57.2; }
+  @if $prefix == -o      { $usage: 0.0; }
+  @if $prefix == -ms     { $usage: 25.75; }
+  @if $prefix == null    { $usage: 5.3; }
+
+  //$usage: prefix-usage($prefix, $capability, $capability-options);
   @if $usage > $threshold {
     @return $usage;
-  } @else {
-    @each $browser in browsers($prefix) {
-      @if index($supported-browsers, $browser) {
-        $min-version: map-get($browser-minimum-versions, $browser);
-        @if $min-version {
-          $actual-prefix: browser-requires-prefix($browser, $min-version, $capability, $capability-options);
-          @if $actual-prefix and $prefix == $actual-prefix {
-            @return $browser $min-version;
-          }
-        }
-      }
-    }
   }
   @return false;
 }
@@ -358,7 +369,8 @@ $css-sel2-support-threshold: $critical-usage-threshold !default;
 //     );
 @mixin prefixed-properties($capability, $threshold, $properties, $capability-options: $default-capability-options) {
   @include with-each-prefix($capability, $threshold, $capability-options) {
-    @each $prop, $value in $properties {
+    @each $prop in map-keys($properties) {
+      $value: map-get($properties, $prop);
       @include prefix-prop($prop, $value);
     }
   }

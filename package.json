@@ -29,6 +29,9 @@
     "test",
     "tests"
   ],
+  "dependencies": {
+    "sass-list-maps": "^1.0.0"
+  },
   "devDependencies": {
     "chalk": "^0.5.1",
     "jasmine-node": "^1.14.5",

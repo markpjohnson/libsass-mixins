@@ -17,5 +17,5 @@ $default-box-sizing: border-box !default;
 //     $box-model: [ content-box | border-box | padding-box ]
 @mixin box-sizing($box-model: $default-box-sizing) {
   $box-model: unquote($box-model);
-  @include prefixed-properties(css3-boxsizing, $box-sizing-support-threshold, (box-sizing: $box-model));
+  @include prefixed-properties(css3-boxsizing, $box-sizing-support-threshold, (box-sizing $box-model));
 }

@@ -45,7 +45,7 @@ $hyphens-support-threshold: $graceful-usage-threshold !default;
 //
 @mixin hyphens($value: auto){
   @include prefixed-properties(css-hyphens, $hyphens-support-threshold, (
-    hyphens: $value
+    hyphens $value
   ));
 }
 

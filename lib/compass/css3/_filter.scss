@@ -12,14 +12,14 @@ $filter-support-threshold: $graceful-usage-threshold !default;
 // for the filter property.
 @mixin filter($filters) {
   @include prefixed-properties(css-filters, $filter-support-threshold,(
-    filter: $filters
+    filter $filters
   ));
 }
 
 // @private Apply filter-margins
 @mixin apply-filter-margin($position, $width) {
   @include prefixed-properties(css-filters, $filter-support-threshold,(
-    filter-margin-#{$position}: $width
+    filter-margin-#{$position} $width
   ));
 }
 
@@ -38,13 +38,13 @@ $filter-support-threshold: $graceful-usage-threshold !default;
 // filter-margin
 @mixin filter-margin($widths) {
   @include prefixed-properties(css-filters, $filter-support-threshold,(
-    filter-margin: $widths
+    filter-margin $widths
   ));
 }
 
 // color-interpolation-filters (auto | sRGB | linearRGB )
 @mixin color-interpolation-filters($value) {
   @include prefixed-properties(css-filters, $filter-support-threshold,(
-    color-interpolation-filters: $value
+    color-interpolation-filters $value
   ));
 }

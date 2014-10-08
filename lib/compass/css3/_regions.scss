@@ -18,10 +18,10 @@ $regions-support-threshold: $graceful-usage-threshold !default;
 
 @mixin flow-into($target) {
   $target: unquote($target);
-  @include prefixed-properties(css-regions, $regions-support-threshold, (flow-into: $target));
+  @include prefixed-properties(css-regions, $regions-support-threshold, (flow-into $target));
 }
 
 @mixin flow-from($target) {
   $target: unquote($target);
-  @include prefixed-properties(css-regions, $regions-support-threshold, (flow-from: $target));
+  @include prefixed-properties(css-regions, $regions-support-threshold, (flow-from $target));
 }

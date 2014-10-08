@@ -56,49 +56,49 @@ $default-animation-play-state       : null !default;
 // Apply any number of animation names.
 @mixin animation-name($name...) {
   $name: set-arglist-default($name, $default-animation-name);
-  @include animation-properties((animation-name: $name));
+  @include animation-properties((animation-name $name));
 }
 
 // Apply any number of animation durations.
 @mixin animation-duration($duration...) {
   $duration: set-arglist-default($duration, $default-animation-duration);
-  @include animation-properties((animation-duration: $duration));
+  @include animation-properties((animation-duration $duration));
 }
 
 // Apply any number of animation delays.
 @mixin animation-delay($delay...) {
   $delay: set-arglist-default($delay, $default-animation-delay);
-  @include animation-properties((animation-delay: $delay));
+  @include animation-properties((animation-delay $delay));
 }
 
 // Apply any number of animation timing functions.
 @mixin animation-timing-function($function...) {
   $function: set-arglist-default($function, $default-animation-timing-function);
-  @include animation-properties((animation-timing-function: $function));
+  @include animation-properties((animation-timing-function $function));
 }
 
 // Apply any number of animation iteration counts.
 @mixin animation-iteration-count($count...) {
   $count: set-arglist-default($count, $default-animation-iteration-count);
-  @include animation-properties((animation-iteration-count: $count));
+  @include animation-properties((animation-iteration-count $count));
 }
 
 // Apply any number of animation directions.
 @mixin animation-direction($direction...) {
   $direction: set-arglist-default($direction, $default-animation-direction);
-  @include animation-properties((animation-direction: $direction));
+  @include animation-properties((animation-direction $direction));
 }
 
 // Apply any number of animation fill modes.
 @mixin animation-fill-mode($mode...) {
   $mode: set-arglist-default($mode, $default-animation-fill-mode);
-  @include animation-properties((animation-fill-mode: $mode));
+  @include animation-properties((animation-fill-mode $mode));
 }
 
 // Apply any number of animation play states.
 @mixin animation-play-state($state...) {
   $state: set-arglist-default($state, $default-animation-play-state);
-  @include animation-properties((animation-play-state: $state));
+  @include animation-properties((animation-play-state $state));
 }
 
 // @private
@@ -118,5 +118,5 @@ $default-animation-play-state       : null !default;
 //     $animation... : Name and settings. [<values> | default]
 @mixin animation($animation...) {
   $animation: if(length($animation) > 0, $animation, default-animation());
-  @include animation-properties((animation: $animation));
+  @include animation-properties((animation $animation));
 }

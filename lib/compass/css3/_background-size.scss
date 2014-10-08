@@ -15,5 +15,5 @@ $default-background-size: 100% auto !default;
 // * mixin defaults to: `$default-background-size`
 @mixin background-size($size...) {
   $size: set-arglist-default($size, $default-background-size);
-  @include prefixed-properties(background-img-opts, $background-size-threshold, (background-size: $size));
+  @include prefixed-properties(background-img-opts, $background-size-threshold, (background-size $size));
 }

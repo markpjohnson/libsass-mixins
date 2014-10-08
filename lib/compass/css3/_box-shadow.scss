@@ -34,13 +34,13 @@ $default-box-shadow-inset: null !default;
                   $default-box-shadow-color);
 }
 
-// Provides cross-browser for Webkit, Gecko, and CSS3 box shadows
-// when one or more box shadows are needed.
-// Each shadow argument should adhere to the standard css3 syntax
-// for the box-shadow property.
+// Provides cross-browser for Webkit, Gecko, and CSS3 box shadows when one or more box
+// shadows are needed.
+// Each shadow argument should adhere to the standard css3 syntax for the
+// box-shadow property.
 @mixin box-shadow($shadow...) {
   $shadow: set-arglist-default($shadow, default-box-shadow());
-  @include prefixed-properties(css-boxshadow, $box-shadow-support-threshold, (box-shadow: $shadow));
+  @include prefixed-properties(css-boxshadow, $box-shadow-support-threshold, (box-shadow $shadow));
 }
 
 // Provides a single cross-browser CSS box shadow for Webkit, Gecko, and CSS3.

@@ -57,8 +57,8 @@ $flexbox-support-threshold: $critical-usage-threshold !default;
 
 // @private
 $flexbox-capability-options: (
-  (full-support: true),
-  (partial-support: true, spec-versions: 3)
+  (full-support true),
+  (partial-support true, spec-versions 3)
 );
 
 // This is the underlying implementation for all the other mixins in this module.
@@ -72,13 +72,14 @@ $flexbox-capability-options: (
 @mixin flexbox($properties, $version: null) {
   $capability-options: $flexbox-capability-options;
   @if $version {
-    $capability-options: (partial-support: true, spec-versions: $version);
+    $capability-options: (partial-support true, spec-versions $version);
   }
 
   @include with-each-prefix(flexbox, $flexbox-support-threshold, $capability-options) {
     // Don't output unprefixed versions when the spec version is not the final version
     @if $version and $current-prefix or not $version or $version == 3 {
-      @each $prop, $value in $properties {
+      @each $prop in map-keys($properties) {
+        $value: map-get($properties, $prop);
         @if $prop == display {
           display: prefix-identifier($value);
         } @else {
@@ -91,66 +92,66 @@ $flexbox-capability-options: (
 
 // Values for $display are: flex (default), inline-flex
 @mixin display-flex($display: flex) {
-  @include flexbox((display: $display));
+  @include flexbox((display $display));
 }
 
 // Values: row | row-reverse | column | column-reverse
 @mixin flex-direction($direction) {
-  @include flexbox((flex-direction: $direction));
+  @include flexbox((flex-direction $direction));
 }
 
 // Values: nowrap | wrap | wrap-reverse
 @mixin flex-wrap($wrap) {
-  @include flexbox((flex-wrap: $wrap));
+  @include flexbox((flex-wrap $wrap));
 }
 
 // Shorthand for flex-direction and flex-wrap.
 @mixin flex-flow($flow) {
-  @include flexbox((flex-flow: $flow));
+  @include flexbox((flex-flow $flow));
 }
 
 // Accepts an integer
 @mixin order($order) {
-  @include flexbox((order: $order));
+  @include flexbox((order $order));
 }
 
 // Shorthand for flex-grow, flex-shrink and optionally flex-basis.
 // Space separated, in that order.
 @mixin flex($flex) {
-  @include flexbox((flex: $flex));
+  @include flexbox((flex $flex));
 }
 
 // Accepts a number.
 @mixin flex-grow($flex-grow) {
-  @include flexbox((flex-grow: $flex-grow));
+  @include flexbox((flex-grow $flex-grow));
 }
 
 // Accepts a number.
 @mixin flex-shrink($flex-shrink) {
-  @include flexbox((flex-shrink: $flex-shrink));
+  @include flexbox((flex-shrink $flex-shrink));
 }
 
 // Accepts any legal value for the width property.
 @mixin flex-basis($flex-basis) {
-  @include flexbox((flex-basis: $flex-basis));
+  @include flexbox((flex-basis $flex-basis));
 }
 
 // Legal values: flex-start | flex-end | center | space-between | space-around
 @mixin justify-content($justify-content) {
-  @include flexbox((justify-content: $justify-content));
+  @include flexbox((justify-content $justify-content));
 }
 
 // Legal values: flex-start | flex-end | center | baseline | stretch
 @mixin align-items($align-items) {
-  @include flexbox((align-items: $align-items));
+  @include flexbox((align-items $align-items));
 }
 
 // Legal values: auto | flex-start | flex-end | center | baseline | stretch
 @mixin align-self($align-self) {
-  @include flexbox((align-self: $align-self));
+  @include flexbox((align-self $align-self));
 }
 
 // Legal values: flex-start | flex-end | center | space-between | space-around | stretch
 @mixin align-content($align-content) {
-  @include flexbox((align-content: $align-content));
+  @include flexbox((align-content $align-content));
 }

@@ -106,7 +106,7 @@ $default-skew-y      : 5deg                  !default;
 @mixin apply-origin($origin, $only3d) {
   $capability: if($only3d or length($origin) > 2, transforms3d, transforms2d);
   @include prefixed-properties($capability, $transform-support-threshold, (
-    transform-origin: $origin
+    transform-origin $origin
   ));
 }
 
@@ -144,7 +144,7 @@ $default-skew-y      : 5deg                  !default;
 ) {
   $capability: if($only3d, transforms3d, transforms2d);
   @include prefixed-properties($capability, $transform-support-threshold, (
-    transform: $transform
+    transform $transform
   ));
 }
 
@@ -171,7 +171,7 @@ $default-skew-y      : 5deg                  !default;
 // values from 500 to 1000 are more-or-less "normal" - a good starting-point.
 @mixin perspective($p) {
   @include prefixed-properties(transforms3d, $transform-support-threshold, (
-    perspective: $p
+    perspective $p
   ));
 }
 
@@ -182,7 +182,7 @@ $default-skew-y      : 5deg                  !default;
 // where the two arguments represent x/y coordinates
 @mixin perspective-origin($origin: 50%) {
   @include prefixed-properties(transforms3d, $transform-support-threshold, (
-    perspective-origin: $origin
+    perspective-origin $origin
   ));
 }
 
@@ -194,7 +194,7 @@ $default-skew-y      : 5deg                  !default;
 // Browsers default to `flat`, mixin defaults to `preserve-3d`.
 @mixin transform-style($style: preserve-3d) {
   @include prefixed-properties(transforms3d, $transform-support-threshold, (
-    transform-style: $style
+    transform-style $style
   ));
 }
 
@@ -206,7 +206,7 @@ $default-skew-y      : 5deg                  !default;
 // Browsers default to visible, mixin defaults to hidden
 @mixin backface-visibility($visibility: hidden) {
   @include prefixed-properties(transforms3d, $transform-support-threshold, (
-    backface-visibility: $visibility
+    backface-visibility $visibility
   ));
 }
 

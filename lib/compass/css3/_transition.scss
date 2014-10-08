@@ -63,14 +63,14 @@ $transitionable-prefixed-values: transform, transform-origin !default;
   @each $item in $transition {
     @if is-time($item) {
       @if map-has-key($transition-map, duration) {
-        $transition-map: map-merge($transition-map, (delay: $item));
+        $transition-map: map-merge($transition-map, (delay $item));
       } @else {
-        $transition-map: map-merge($transition-map, (duration: $item));
+        $transition-map: map-merge($transition-map, (duration $item));
       }
     } @else if map-has-key($transition-map, property) {
-      $transition-map: map-merge($transition-map, (timing-function: $item));
+      $transition-map: map-merge($transition-map, (timing-function $item));
     } @else {
-      $transition-map: map-merge($transition-map, (property: $item));
+      $transition-map: map-merge($transition-map, (property $item));
     }
   }
 
@@ -98,7 +98,7 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 @mixin transition-duration($durations...) {
   $durations: set-arglist-default($durations, $default-transition-duration);
   @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-duration: $durations
+    transition-duration $durations
   ));
 }
 
@@ -111,7 +111,7 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 @mixin transition-timing-function($functions...) {
   $functions: set-arglist-default($functions, $default-transition-function);
   @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-timing-function: $functions
+    transition-timing-function $functions
   ));
 }
 
@@ -123,7 +123,7 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 @mixin transition-delay($delays...) {
   $delays: set-arglist-default($delays, $default-transition-delay);
   @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-delay: $delays
+    transition-delay $delays
   ));
 }
 
